@@ -49,7 +49,10 @@ export default function Home() {
       let allComments = await fetchAllComments(videoId);
       console.log(allComments);
       setLoading(false);
-      router.push('/dashboard')
+      if(!allComments.error)
+      router.push('/dashboard');
+      else
+      alert("Error Analysing video");
       // classifyComments(commentsList).then((result) => console.log(result));
     } else {
       setLoading(false);
