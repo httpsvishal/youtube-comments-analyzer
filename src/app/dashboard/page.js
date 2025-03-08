@@ -16,7 +16,7 @@ import CustomAreaChart from "@/components/CustomAreaChart";
 function getCommentsPerMonth(comments) {
     const counts = {};
   
-    comments.forEach(({ commentData }) => {
+    comments?.forEach(({ commentData }) => {
       const date = new Date(commentData.publishedAt);
       const monthYear = date.toLocaleString("default", { month: "short", year: "numeric" });
   
@@ -31,14 +31,14 @@ function getCommentsPerMonth(comments) {
   
 export default function Dashboard() {
     const {data }= useData();
-    const chartData = getCommentsPerMonth(data.classifiedComments);
-  const agree = data.classifiedComments.filter(
+    const chartData = getCommentsPerMonth(data?.classifiedComments);
+  const agree = data?.classifiedComments.filter(
     (comment) => comment.sentiment === "Agree"
   ).length;
-  const disagree = data.classifiedComments.filter(
+  const disagree = data?.classifiedComments.filter(
     (comment) => comment.sentiment === "Disagree"
   ).length;
-  const neutral = data.classifiedComments.filter(
+  const neutral = data?.classifiedComments.filter(
     (comment) => comment.sentiment === "Neutral"
   ).length;
 
@@ -129,7 +129,7 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <div className= "flex gap-3 flex-wrap">
-            {data.keywords.map((keyword)=>{
+            {data?.keywords.map((keyword)=>{
                 return <div key={keyword} className="bg-gray-700 px-3 py-1 rounded-xl">
                     <p className="text-gray-300 text-xl">{keyword}</p>
                     </div>
