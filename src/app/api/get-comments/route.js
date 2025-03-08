@@ -51,14 +51,13 @@ const classifyComments = async (comments) => {
                     You will receive an array of comments in JSON Format.
 
                     ### **Expected Output Format:**
-                    Return only a JSON array which can be used to process where each comment is an object with the following structure:
+                    Return only a JSON array which can be used to process where each comment is an object with the following structure and sentiment with each comment and an array of top keywords:
 
                     {
-                      comments : [
-                        {
-                          "comment": "<original comment>",
-                          "sentiment": "<Agree/Disagree/Neutral>"
-                        }
+                      sentiments : [
+                      "<Agree/Disagree/Neutral>"
+                      "<Agree/Disagree/Neutral>"
+                      "<Agree/Disagree/Neutral>"
                       ]
                       keywords :[
                         "keyword"
@@ -73,9 +72,9 @@ const classifyComments = async (comments) => {
     const data = response.response.text()
     console.log(data);
     const cleanedData = data.replace(/```json|```/g, ""); // Remove any markdown formatting
-    const classifiedComments = JSON.parse(cleanedData).comments.map((comment,index) => ({
-      comment: comment.comment,
-      sentiment: comment.sentiment,
+    const classifiedComments = JSON.parse(cleanedData).sentiments.map((sentiment,index) => ({
+      comment: comments[index].comment,
+      sentiment: sentiment,
       commentData: comments[index].commentData,
       }));
     const keywords = JSON.parse(cleanedData).keywords;
