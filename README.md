@@ -76,9 +76,4 @@ GEMINI_API_KEY=your_gemini_api_key
 ## Testing
 To run the project with test data (useful for development), the `data.json` file in `/lib` can be used. However, it is not required for production.
 
-## Contributing
-Contributions are welcome! Feel free to open an issue or submit a pull request.
-
-## License
-This project is licensed under the MIT License.
 
