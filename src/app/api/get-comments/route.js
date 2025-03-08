@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import connectMongo from "../../../../lib/mongodb";
+import VideoComment from "../../../../models/VideoComment";
 
 async function fetchAllComments(videoId, apiKey) {
   let comments = [];
@@ -98,7 +100,10 @@ const classifyComments = async (comments) => {
 };
 
 export async function POST(req) {
+
+
   try {
+    await connectMongo();
     const body = await req.json();
     const { videoId } = body;
 
@@ -119,6 +124,10 @@ export async function POST(req) {
     }
 
     const classifiedComments = await classifyComments(commentsList);
+    const newVideo = { videoId, data : classifiedComments }
+    console.log(newVideo);
+    await VideoComment.create(newVideo);
+
     return new NextResponse(JSON.stringify(classifiedComments), { status: 200 });
   } catch (error) {
     console.error("Error processing request:", error);
