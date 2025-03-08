@@ -1,5 +1,6 @@
 "use client";
 
+import Spinner from "@/components/Spinner";
 import { useData } from "@/context/DataContext";
 import { useRouter } from "next/navigation";
 import {  useState } from "react";
@@ -7,6 +8,7 @@ import {  useState } from "react";
 export default function Home() {
   const router = useRouter();
   const [videoUrl, setVideoUrl] = useState("");
+  const [loading,setLoading] = useState(false);
   const {setData} = useData();
 
   async function fetchAllComments(videoId) {
@@ -40,16 +42,20 @@ export default function Home() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const videoId = extractVideoId();
     if (videoId) {
       console.log(videoId);
       let allComments = await fetchAllComments(videoId);
       console.log(allComments);
+      setLoading(false);
       router.push('/dashboard')
       // classifyComments(commentsList).then((result) => console.log(result));
     } else {
+      setLoading(false);
       alert("Invalid video URL");
     }
+    
   };
 
   return (
@@ -58,7 +64,7 @@ export default function Home() {
         <h1 className="text-[#8102f7] text-4xl font-semibold text-center px-8 ">
           Youtube Comments Analyzer
         </h1>
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        {!loading && <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <label
             htmlFor="video-url"
             className="block text-sm font-medium text-gray-700"
@@ -77,7 +83,13 @@ export default function Home() {
           <button className="bg-[#8102f7] text-white py-2 px-4 rounded-md">
             Analyze Comments
           </button>
-        </form>
+        </form>}
+        {loading && 
+          <div className="flex justify-center items-center gap-4">
+            <p className="text-xl text-[#8102f7]">Loading....</p>
+            <Spinner />
+          </div>
+        }
       </div>
     </div>
   );

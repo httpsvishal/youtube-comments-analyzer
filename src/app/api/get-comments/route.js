@@ -125,8 +125,13 @@ export async function POST(req) {
 
     const classifiedComments = await classifyComments(commentsList);
     const newVideo = { videoId, data : classifiedComments }
-    console.log(newVideo);
+    const existingVideo = await VideoComment.findOne({ videoId });
+
+    if (!existingVideo) {
+    // If it doesn't exist, create a new entry
     await VideoComment.create(newVideo);
+    console.log('New video data added:', newVideo);
+    }
 
     return new NextResponse(JSON.stringify(classifiedComments), { status: 200 });
   } catch (error) {
