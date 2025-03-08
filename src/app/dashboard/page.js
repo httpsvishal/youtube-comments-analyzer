@@ -51,7 +51,7 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen flex flex-col gap-12  p-16 bg-black">
       <h2 className="text-5xl text-white font-bold">Analysis Results</h2>
-      <div className="grid grid-cols-2 gap-8 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 ">
         <Card className="grow px-6 py-8 bg-gray-800 backdrop:blur-sm text-white border-0">
           <CardHeader className="px-0">
             <CardTitle className="text-2xl font-semibold">
@@ -113,7 +113,7 @@ export default function Dashboard() {
             </div>
         </Card>
       </div>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card className="grow  px-6 py-8 bg-gray-800 backdrop:blur-sm text-white border-0">
         <CardHeader className="px-0">
             <CardTitle className="text-2xl font-semibold">
